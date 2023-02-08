@@ -15,6 +15,9 @@ RUN groupadd --gid $USER_GID $USERNAME \
 # libaio-dev is required for deepspeed it seems
 RUN apt-get install libaio-dev -y
 
+# install git-lfs
+RUN apt install git-lfs
+
 USER $USERNAME
 
 RUN pip3 install --upgrade pip
