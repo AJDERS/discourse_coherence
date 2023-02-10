@@ -1,5 +1,5 @@
 # Danish Discourse Coherence Classification
-This repository is for training a classifier for danish discourse coherence. It uses the (DDisco)[https://huggingface.co/datasets/ajders/ddisco] dataset. The model is available at (Hugging Face Hub)[https://huggingface.co/ajders/ddisco_classifier].
+This repository is for training a classifier for danish discourse coherence. It uses the [DDisco](https://huggingface.co/datasets/ajders/ddisco) dataset. The model is available at [Hugging Face Hub](https://huggingface.co/ajders/ddisco_classifier).
 
 ## Dataset Description
 
