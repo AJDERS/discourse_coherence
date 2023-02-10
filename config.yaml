@@ -1,6 +1,6 @@
 model:
-  model_name_or_path: "KennethEnevoldsen/dfm-bert-large-v1-2048bsz-1Msteps"
-  tokenizer_name: "KennethEnevoldsen/dfm-bert-large-v1-2048bsz-1Msteps"
+  model_name_or_path: "NbAiLab/nb-bert-base"
+  tokenizer_name: "NbAiLab/nb-bert-base"
   cache_dir: None
   model_revision: main
   use_fast_tokenizer: None
@@ -11,7 +11,7 @@ data:
   lang: da
   overwrite_cache: False
   validation_split_percentage: 5
-  max_seq_length: 512
+  max_seq_length: 256
   preprocessing_num_workers: 8
   mlm_probability: 15
   line_by_line: False
@@ -26,28 +26,29 @@ training:
   do_eval: True
   do_predict: True
   evaluation_strategy: steps
-  eval_steps: 500
-  per_device_train_batch_size: 1
-  per_device_eval_batch_size: 1
-  gradient_accumulation_steps: 8
-  eval_accumulation_steps: 8
-  learning_rate: 5e-5
-  weight_decay: 0.0
+  eval_steps: 5
+  per_device_train_batch_size: 2
+  per_device_eval_batch_size: 2
+  gradient_accumulation_steps: 16
+  eval_accumulation_steps: 16
+  learning_rate: 2e-5
+  weight_decay: 0.01
   adam_beta1: 0.9
   adam_beta2: 0.999
   adam_epsilon: 1e-8
   max_grad_norm: 1.0
-  num_train_epochs: 3.0
+  num_train_epochs: 6.0
   lr_scheduler_type: linear
-  warmup_steps: 200
+  warmup_ratio: 0.05
   log_level: info
   logging_strategy: steps
-  logging_steps: 500
+  logging_steps: 5
   save_strategy: steps
-  save_steps: 500
+  save_steps: 15
   save_total_limit: 3
   seed: 703
   load_best_model_at_end: True
   push_to_hub: True
   hub_model_id: ajders/ddisco_classifier
   hub_strategy: every_save
+  no_cuda: False
