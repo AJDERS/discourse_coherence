@@ -14,8 +14,6 @@ from transformers.trainer_utils import get_last_checkpoint
 
 logger = logging.getLogger(__name__)
 
-os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
-
 @dataclass
 class DataArguments:
     """
@@ -113,6 +111,9 @@ def main(config: DictConfig, **kwargs):
     # Rename column
     raw_datasets = raw_datasets.rename_columns({"rating": "labels"})
 
+    # Reduce label index by 1 so they are 0, 1, 2
+    raw_datasets = raw_datasets.map(lambda x: {"labels": x["labels"] - 1})
+
     # Load tokenizer
     tokenizer = AutoTokenizer.from_pretrained(
         model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
@@ -137,8 +138,6 @@ def main(config: DictConfig, **kwargs):
         num_proc=data_args.preprocessing_num_workers,
         load_from_cache_file=not data_args.overwrite_cache,
     )
-
-    data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
     # Load model
     model = AutoModelForSequenceClassification.from_pretrained(
@@ -165,7 +164,6 @@ def main(config: DictConfig, **kwargs):
         eval_dataset=tokenized_datasets["test"] if training_args.do_eval else None,
         tokenizer=tokenizer,
         compute_metrics=compute_metrics,
-        data_collator=data_collator,
     )
 
     # Training
